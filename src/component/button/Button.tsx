@@ -1,3 +1,4 @@
+import React from "react";
 import "./Button.scss";
 type PropsType = {
   color: string;
@@ -5,7 +6,11 @@ type PropsType = {
   handleClick: any;
 };
 
-const Button = ({ color, text = "Click me", handleClick }: PropsType) => {
+const Button: React.FunctionComponent<PropsType> = ({
+  color,
+  text = "Click me",
+  handleClick,
+}) => {
   return (
     <button className="button-theme" onClick={handleClick}>
       {text}
