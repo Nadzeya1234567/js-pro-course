@@ -9,8 +9,9 @@ type PropsType = {};
 const URL = "https://studapi.teachmeskills.by/blog/posts/?limit=50&offset=0";
 
 const Posts: React.FC<PropsType> = () => {
-  const [posts, setPosts] = useState<PostType[]>([]);
   //мы должны явно указать тип массива,т.к.ts не понимает
+  const [posts, setPosts] = useState<PostType[]>([]);
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
@@ -19,23 +20,25 @@ const Posts: React.FC<PropsType> = () => {
   }, [posts]);
 
   useEffect(() => {
-    setLoading(true);
-    setTimeout(fetchData, 2000);
+    fetchData();
   }, []);
 
   const fetchData = () => {
-    fetch(URL)
-      .then((response) => response.json())
-      .then((data) => {
-        const posts = data.results as PostType[];
-        setPosts(posts);
-      })
-      .catch(() => {
-        setError(true);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    setLoading(true);
+    setTimeout(() => {
+      fetch(URL)
+        .then((response) => response.json())
+        .then((data) => {
+          const posts = data.results as PostType[];
+          setPosts(posts);
+        })
+        .catch(() => {
+          setError(true);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    }, 1000);
   };
 
   return (

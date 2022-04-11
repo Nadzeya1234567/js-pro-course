@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import PostType from "../../../types/postType";
 import "./PostsCard.scss";
 
@@ -8,11 +8,21 @@ type PropsType = {
 
 const showImage = false;
 const PostsCard: React.FC<PropsType> = ({ data }) => {
+  const [error, setError] = useState(false);
+
+  if (data.author === 8) {
+    return null;
+  }
+
+  const onError = () => {
+    setError(true);
+  };
+
   return (
     <div className="post-card-container">
-      {data.image ? (
+      {!!data.image && !error ? (
         <div className="image-wrap">
-          <img src={data.image} alt="" className="image" />
+          <img src={data.image} onError={onError} alt="" className="image" />
         </div>
       ) : (
         <div className="image-placeholder">

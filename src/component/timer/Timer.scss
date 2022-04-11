@@ -1,0 +1,24 @@
+.timer-container {
+  display: flex;
+  align-items: center;
+
+  .time {
+    color: white;
+    margin-right: 8px;
+  }
+  .icon-button {
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+
+    path {
+      fill: white;
+    }
+
+    &:hover {
+      path {
+        fill: var(--primary-color2);
+      }
+    }
+  }
+}
