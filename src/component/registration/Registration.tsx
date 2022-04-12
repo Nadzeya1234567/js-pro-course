@@ -1,27 +1,48 @@
 import React, { useState } from "react";
+import FormValuesType from "../../types/formValuesType";
+import Button from "../ui/button/Button";
+import FormCard from "../ui/formCard/FormCard";
 import TextField from "../ui/textField/TextField";
 
-import "./Registration.scss";
-
 const Registration: React.FC = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  //const [email, setEmail] = useState("");
+  //const [password, setPassword] = useState("");
+
+  const [values, setValues] = useState<FormValuesType>({});
 
   const handleSubmit = () => {
-    console.log({ email, password });
+    console.log(values);
   };
 
+  //const setEmail = (email: string) => {
+  //  setValues((prevValues) => ({
+  //  ...prevValues,
+  //  email,
+  //}));
+  // };
+
+  //const setEmail = (value: string) => setValue("email", value);
+  //const setPassword = (value: string) => setValue("password", value);
+
   return (
-    <div className="registration-container">
-      <TextField label="Email" type="email" value={email} setValue={setEmail} />
+    <FormCard header="Registration">
+      <TextField
+        label="Email"
+        type="email"
+        name="email"
+        values={values}
+        setValues={setValues}
+      />
       <TextField
         label="Password"
         type="password"
-        value={password}
-        setValue={setPassword}
+        name="password"
+        values={values}
+        setValues={setValues}
       />
-      <button onClick={handleSubmit}>Submit</button>
-    </div>
+
+      <Button onClick={handleSubmit}>Registration</Button>
+    </FormCard>
   );
 };
 

@@ -1,28 +1,29 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 
-//import Posts from "./component/posts/Posts";
+import Posts from "./component/posts/Posts";
 
 import Header from "./component/header/Header";
+import Login from "./component/login/Login";
 import Registration from "./component/registration/Registration";
+import LanguageContext from "./contexts/LanguageContext";
 
 const App: React.FC = () => {
+  const [lang, setLang] = useState("ru");
+
   return (
-    <div className="App">
-      <div className="app-container">
-        <Header />
-        <Registration />
+    <LanguageContext.Provider value={{ lang, setLang }}>
+      <div className="App">
+        <div className="app-container">
+          <Header />
+          {/* <Registration /> */}
 
-        {/*  <Posts /> */}
+          <Login />
 
-        {/* 
-      <Button
-        color="red"
-        text="Learn More"
-        handleClick={() => console.log("Red button clicked")}
-      ></Button> */}
+          {/* <Posts /> */}
+        </div>
       </div>
-    </div>
+    </LanguageContext.Provider>
   );
 };
 
