@@ -1,5 +1,13 @@
 import React from "react";
 
-const LanguageContext = React.createContext<any>("");
+type ContextType = {
+  lang: string;
+  setLang: (lang: string) => void;
+};
+
+const LanguageContext = React.createContext<ContextType>({
+  lang: "en",
+  setLang: () => {},
+});
 
 export default LanguageContext;
