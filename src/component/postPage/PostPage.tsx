@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from "react";
+import { useLocation, useParams } from "react-router-dom";
 import PostType from "../../types/postType";
-import PostCard from "../posts/postCard/PostCard";
+import Image from "../image/Image";
 
-type PropsType = {
-  id: number;
-};
+import "./PostPage.scss";
 
 const URL = "https://studapi.teachmeskills.by/blog/posts/";
 
-const Post: React.FC<PropsType> = ({ id }) => {
+const PostPage: React.FC = () => {
   const [post, setPost] = useState<PostType>();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const { id } = useParams();
+
+  const x = useLocation();
 
   useEffect(() => {
     fetchData();
@@ -32,18 +34,28 @@ const Post: React.FC<PropsType> = ({ id }) => {
         .finally(() => {
           setLoading(false);
         });
-    }, 1000);
+    }, 0);
   };
 
   if (loading) {
-    return <div>"Loading..."</div>;
+    return <div>Loading...</div>;
   } else if (error) {
-    return <div>"Error..."</div>;
-  } else if (post) {
-    return <PostCard data={post} />;
+    return <div>Error...</div>;
   }
 
-  return null;
+  if (!post) {
+    return null;
+  }
+
+  return (
+    <div className="post-card-container">
+      <Image src={post.image} />
+
+      <div className="title">{post.title}</div>
+      <div className="text">{post.text}</div>
+      <div className="date">{post.date}</div>
+    </div>
+  );
 };
 
-export default Post;
+export default PostPage;

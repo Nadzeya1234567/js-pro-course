@@ -27,7 +27,7 @@ const usePosts = () => {
         .finally(() => {
           setLoading(false);
         });
-    }, 1000);
+    }, 10);
   };
 
   return { posts, loading, error };

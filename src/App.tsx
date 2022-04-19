@@ -1,27 +1,45 @@
 import React, { useEffect, useState } from "react";
-import "./App.css";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 
 import Posts from "./component/posts/Posts";
-
 import Header from "./component/header/Header";
 import Login from "./component/login/Login";
 import Registration from "./component/registration/Registration";
-import Post from "./component/post/Post";
+import PostPage from "./component/postPage/PostPage";
+
+import "./App.css";
 
 const App: React.FC = () => {
   return (
-    <div className="App">
-      <div className="app-container">
-        <Header />
-        {/* <Registration /> */}
+    <BrowserRouter>
+      <div className="App">
+        <div className="app-container">
+          <Header />
 
-        {/* <Login /> */}
+          <div className="app-content">
+            <Routes>
+              <Route path="/login" element={<Login />} />
+              <Route path="/registration" element={<Registration />} />
+              <Route path="/posts">
+                <Route index element={<Posts />} />
+                <Route path=":id" element={<PostPage />} />
+              </Route>
+              {/*  переадресация */}
+              <Route path="*" element={<Navigate to={"/posts"} />} />
+              {/*  <Route path="*" element={<Posts />} /> */}
+            </Routes>
 
-        <Post id={2} />
+            {/* <Registration /> */}
 
-        {/*   <Posts /> */}
+            {/* <Login /> */}
+
+            {/*  <Post id={2} /> */}
+
+            {/*  <Posts /> */}
+          </div>
+        </div>
       </div>
-    </div>
+    </BrowserRouter>
   );
 };
 

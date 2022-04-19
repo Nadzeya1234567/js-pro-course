@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import PostType from "../../../types/postType";
 import Image from "../../image/Image";
 import "./PostCard.scss";
@@ -17,8 +18,10 @@ const PostCard: React.FC<PropsType> = ({ data }) => {
     <div className="post-card-container">
       <Image src={data.image} />
 
-      <div className="title">{data.title}</div>
-      <div className="text">{data.text}</div>
+      <Link to={`/posts/${data.id}`}>
+        <div className="title">{data.title}</div>
+      </Link>
+
       <div className="date">{data.date}</div>
     </div>
   );

@@ -5,9 +5,14 @@ import "./Header.scss";
 import { ReactComponent as LogoIcon } from "../../assets/logo.svg";
 
 import useTranslate from "../hooks/useTranslate";
+import { Link, NavLink } from "react-router-dom";
 
 const Header: React.FC = () => {
   const { lang, setLang } = useTranslate();
+
+  const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+  };
 
   //const toggleLanguage = () => {
   //  setLang((prevValue: string) => (prevValue === "en" ? "ru" : "en"));
@@ -22,10 +27,28 @@ const Header: React.FC = () => {
 
       <ul className="links">
         <li>
-          <a href="/">Posts</a>
+          <NavLink
+            to="/login"
+            className={({ isActive }) => (isActive ? "_active" : "")}
+          >
+            Login
+          </NavLink>
         </li>
         <li>
-          <a href="/">My posts</a>
+          <NavLink
+            to="/registration"
+            className={({ isActive }) => (isActive ? "_active" : "")}
+          >
+            Registration
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
+            to="/posts"
+            className={({ isActive }) => (isActive ? "_active" : "")}
+          >
+            Posts
+          </NavLink>
         </li>
       </ul>
 
