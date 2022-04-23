@@ -1,8 +1,13 @@
 .posts-container {
-  display: flex;
-  align-items: stretch;
-  justify-content: space-around;
-  flex-wrap: wrap;
-  gap: 24px;
-  margin: 0 -15px;
+  .pagination {
+    margin: 0 auto 24px;
+  }
+  .cards {
+    display: flex;
+    align-items: stretch;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 24px;
+    margin: 0 -15px;
+  }
 }
