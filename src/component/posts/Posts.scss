@@ -1,7 +1,4 @@
 .posts-container {
-  .pagination {
-    margin: 0 auto 24px;
-  }
   .cards {
     display: flex;
     align-items: stretch;
@@ -9,5 +6,11 @@
     flex-wrap: wrap;
     gap: 24px;
     margin: 0 -15px;
+  }
+
+  .posts-filter {
+    display: flex;
+    align-items: center;
+    margin-bottom: 24px;
   }
 }

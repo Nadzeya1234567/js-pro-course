@@ -15,9 +15,22 @@ const defValue: ResponseType = {
   count: 0,
   results: [],
 };
-const usePosts = ({ page, limit }: PostsFilterType) => {
+const usePosts = ({
+  page,
+  limit,
+  author,
+  lesson_num,
+  ordering,
+}: PostsFilterType) => {
   const offset = limit * (page - 1);
-  const url = `${URL}?limit=${limit}&offset=${offset}`;
+  let url = `${URL}?limit=${limit}&offset=${offset}&ordering=${ordering}`;
+
+  if (author) {
+    url += `&author=${author}`;
+  }
+  if (lesson_num) {
+    url += `&lesson_num=${lesson_num}`;
+  }
   const { data, loading, error } = useRequest<ResponseType>(defValue, url);
 
   return { data, loading, error };

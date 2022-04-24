@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import usePosts from "../../apiHooks/usePosts";
 import PostsCard from "./postCard/PostCard";
 import PostsFilter from "./PostsFilter";
-import PostsFilterType from "./PostsFilterType";
+import PostsFilterType, { PostsOrder } from "./PostsFilterType";
 
 import "./Posts.scss";
 
@@ -12,6 +12,7 @@ const Posts: React.FC<PropsType> = () => {
   const [filter, setFilter] = useState<PostsFilterType>({
     page: 1,
     limit: 10,
+    ordering: PostsOrder.idAsc,
   });
 
   const { data, loading, error } = usePosts(filter);
