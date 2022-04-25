@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 
 const useRequest = <T>(defValue: T, url: string) => {
@@ -13,10 +14,10 @@ const useRequest = <T>(defValue: T, url: string) => {
     setLoading(true);
     setData(defValue);
     setTimeout(() => {
-      fetch(url)
-        .then((response) => response.json())
-        .then((data) => {
-          setData(data as T);
+      axios
+        .get(url)
+        .then((response) => {
+          setData(response.data as T);
         })
         .catch(() => {
           setError(true);
@@ -24,6 +25,23 @@ const useRequest = <T>(defValue: T, url: string) => {
         .finally(() => {
           setLoading(false);
         });
+      //fetch(url)
+      //  .then((response) => {
+      //   if (response.ok) {
+      //     return response.json();
+      //   } else {
+      //     throw new Error(response.statusText);
+      //   }
+      // })
+      // .then((data) => {
+      //   setData(data as T);
+      // })
+      // .catch(() => {
+      //   setError(true);
+      // })
+      // .finally(() => {
+      //   setLoading(false);
+      // });
     }, 10);
   };
 
