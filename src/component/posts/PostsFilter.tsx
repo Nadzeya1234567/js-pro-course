@@ -1,83 +1,64 @@
 import React from "react";
 import { MenuItem, Pagination, Select, SelectChangeEvent } from "@mui/material";
-import PostsFilterType, { PostsOrder } from "./PostsFilterType";
+import PostsFilterType, { PostsOrder } from "./PostsFilterTypes";
 import TextField from "../ui/textField/TextField";
+import {
+  setLimit,
+  setPage,
+  setOrder,
+  setAuthor,
+  setLesson,
+} from "./PostsFilterActionCreators";
 
 import "./Posts.scss";
 
 type PropsType = {
   count: number;
-  filter: PostsFilterType;
-  setFilter: (callback: (v: PostsFilterType) => PostsFilterType) => void;
+  state: PostsFilterType;
+  dispatch: any;
 };
 
-const PostsFilter: React.FC<PropsType> = ({ count, filter, setFilter }) => {
-  const setAuthor = (value: string) => {
-    //валидация: если строка не явл числом, код НЕ выполняется.
-    if (isNaN(+value)) {
-      return;
-    }
-    //чтобы в строке не висел 0
-    const author = +value > 0 ? +value : undefined;
-    setFilter((prevValue) => ({
-      ...prevValue,
-      author,
-    }));
+const PostsFilter: React.FC<PropsType> = ({ count, state, dispatch }) => {
+  const updateAuthor = (value: string) => {
+    dispatch(setAuthor(value));
   };
-  const setLesson = (value: string) => {
-    if (isNaN(+value)) {
-      return;
-    }
-    const lesson_num = +value > 0 ? +value : undefined;
-    setFilter((prevValue) => ({
-      ...prevValue,
-      lesson_num,
-    }));
+  const updateLesson = (value: string) => {
+    dispatch(setLesson(value));
   };
 
   const handleChangeOrdering = (event: SelectChangeEvent) => {
-    setFilter((prevValue) => ({
-      ...prevValue,
-      ordering: event.target.value as PostsOrder,
-    }));
+    dispatch(setOrder(event.target.value as PostsOrder));
   };
 
   const handleChangeLimit = (event: SelectChangeEvent) => {
-    setFilter((prevValue) => ({
-      ...prevValue,
-      page: 1,
-      limit: +event.target.value,
-    }));
+    dispatch(setLimit(+event.target.value));
   };
 
   const handleChangePage = (
     event: React.ChangeEvent<unknown>,
     value: number
   ) => {
-    setFilter((prevValue) => ({
-      ...prevValue,
-      page: value,
-    }));
+    dispatch(setPage(value));
+    //setFilter((prevValue) => ({
+    //  ...prevValue,
+    //  page: value,
+    //}));
   };
 
   return (
     <div className="posts-filter">
       <TextField
         label="Author"
-        value={filter.author?.toString()}
-        setValue={setAuthor}
+        value={state.author?.toString()}
+        setValue={updateAuthor}
       />
       <TextField
         label="Lesson"
-        value={filter.lesson_num?.toString()}
-        setValue={setLesson}
+        value={state.lesson_num?.toString()}
+        setValue={updateLesson}
       />
 
-      <Select
-        label="Items per page"
-        value={filter.ordering}
-        onChange={handleChangeOrdering}
-      >
+      <Select value={state.ordering} onChange={handleChangeOrdering}>
         <MenuItem value={PostsOrder.idAsc}>ASC Id</MenuItem>
         <MenuItem value={PostsOrder.idDesc}>DESC Id</MenuItem>
         <MenuItem value={PostsOrder.dateAsc}>ASC Date</MenuItem>
@@ -88,7 +69,7 @@ const PostsFilter: React.FC<PropsType> = ({ count, filter, setFilter }) => {
 
       <Select
         label="Items per page"
-        value={filter.limit.toString()}
+        value={state.limit.toString()}
         onChange={handleChangeLimit}
       >
         <MenuItem value={10}>Ten</MenuItem>
@@ -98,9 +79,9 @@ const PostsFilter: React.FC<PropsType> = ({ count, filter, setFilter }) => {
 
       <Pagination
         className="pagination"
-        page={filter.page}
+        page={state.page}
         onChange={handleChangePage}
-        count={Math.ceil(count / filter.limit)}
+        count={Math.ceil(count / state.limit)}
       />
     </div>
   );

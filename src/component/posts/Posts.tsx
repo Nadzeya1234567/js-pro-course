@@ -1,25 +1,21 @@
-import React, { useState } from "react";
+import React, { useReducer } from "react";
 import usePosts from "../../apiHooks/usePosts";
 import PostsCard from "./postCard/PostCard";
 import PostsFilter from "./PostsFilter";
-import PostsFilterType, { PostsOrder } from "./PostsFilterType";
+import { initialState, PostsFilterReducer } from "./PostsFilterReducer";
 
 import "./Posts.scss";
 
 type PropsType = {};
 
 const Posts: React.FC<PropsType> = () => {
-  const [filter, setFilter] = useState<PostsFilterType>({
-    page: 1,
-    limit: 10,
-    ordering: PostsOrder.idAsc,
-  });
+  const [state, dispatch] = useReducer(PostsFilterReducer, initialState);
 
-  const { data, loading, error } = usePosts(filter);
+  const { data, loading, error } = usePosts(state);
 
   return (
     <div className="posts-container">
-      <PostsFilter count={data.count} filter={filter} setFilter={setFilter} />
+      <PostsFilter count={data.count} state={state} dispatch={dispatch} />
 
       <div className="cards">
         {data.results.map((item) => (
