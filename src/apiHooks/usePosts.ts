@@ -1,4 +1,4 @@
-import PostsFilterType from "../component/posts/PostsFilterType";
+import PostsFilterType from "../component/posts/PostsFilterTypes";
 import PostType from "../types/postType";
 import useRequest from "./useRequest";
 
