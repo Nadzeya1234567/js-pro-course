@@ -6,6 +6,7 @@ import Header from "./component/header/Header";
 import Login from "./component/login/Login";
 import Registration from "./component/registration/Registration";
 import PostPage from "./component/postPage/PostPage";
+import Clicker from "./component/clicker/Clicker";
 
 import "./App.css";
 
@@ -18,6 +19,16 @@ const App: React.FC = () => {
 
           <div className="app-content">
             <Routes>
+              <Route
+                path="/clicker"
+                element={
+                  <div>
+                    <Clicker />
+                    <Clicker />
+                    <Clicker />
+                  </div>
+                }
+              />
               <Route path="/login" element={<Login />} />
               <Route path="/registration" element={<Registration />} />
               <Route path="/posts">

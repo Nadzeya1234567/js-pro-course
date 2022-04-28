@@ -3,6 +3,7 @@ import Timer from "../timer/Timer";
 import { ReactComponent as LogoIcon } from "../../assets/logo.svg";
 import useTranslate from "../hooks/useTranslate";
 import { NavLink } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import "./Header.scss";
 
@@ -15,6 +16,8 @@ const LINKS = [
 const Header: React.FC = () => {
   const { lang, setLang } = useTranslate();
 
+  const count = useSelector((state: any) => state.clicker.value);
+
   //const toggleLanguage = () => {
   //  setLang((prevValue: string) => (prevValue === "en" ? "ru" : "en"));
   //};
@@ -23,6 +26,7 @@ const Header: React.FC = () => {
     <nav className="header-container">
       <div className="logo">
         {/* <LogoIcon /> */}
+        {count}
         <div className="app-name">Blog Online</div>
       </div>
 
