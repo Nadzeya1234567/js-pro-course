@@ -25,23 +25,6 @@ const useRequest = <T>(defValue: T, url: string) => {
         .finally(() => {
           setLoading(false);
         });
-      //fetch(url)
-      //  .then((response) => {
-      //   if (response.ok) {
-      //     return response.json();
-      //   } else {
-      //     throw new Error(response.statusText);
-      //   }
-      // })
-      // .then((data) => {
-      //   setData(data as T);
-      // })
-      // .catch(() => {
-      //   setError(true);
-      // })
-      // .finally(() => {
-      //   setLoading(false);
-      // });
     }, 10);
   };
 
