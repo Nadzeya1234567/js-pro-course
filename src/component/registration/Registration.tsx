@@ -12,25 +12,27 @@ const Registration: React.FC = () => {
   };
 
   return (
-    <FormCard header="Registration">
-      <FormTextField
-        autofocus
-        label="Email"
-        type="email"
-        name="email"
-        values={values}
-        setValues={setValues}
-      />
-      <FormTextField
-        label="Password"
-        type="password"
-        name="password"
-        values={values}
-        setValues={setValues}
-      />
+    <div className="center_content">
+      <FormCard header="Registration">
+        <FormTextField
+          autofocus
+          label="Email"
+          type="email"
+          name="email"
+          values={values}
+          setValues={setValues}
+        />
+        <FormTextField
+          label="Password"
+          type="password"
+          name="password"
+          values={values}
+          setValues={setValues}
+        />
 
-      <Button onClick={handleSubmit}>Registration</Button>
-    </FormCard>
+        <Button onClick={handleSubmit}>Registration</Button>
+      </FormCard>
+    </div>
   );
 };
 

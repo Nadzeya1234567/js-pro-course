@@ -22,38 +22,40 @@ const Login: React.FC = () => {
   };
 
   return (
-    <FormCard header="Login">
-      <FormTextField
-        autofocus={true}
-        label={translate("login.name")} //lang === "en" ? "Name" : "Имя"
-        name="name"
-        values={values}
-        setValues={setValues}
-      />
-      <FormTextField
-        label={translate("login.email")}
-        type="email"
-        name="email"
-        values={values}
-        setValues={setValues}
-      />
-      <FormTextField
-        label={translate("login.password")}
-        type="password"
-        name="password"
-        values={values}
-        setValues={setValues}
-      />
-      <FormTextField
-        label={translate("login.confirmPassword")}
-        type="password"
-        name="confirmPassword"
-        values={values}
-        setValues={setValues}
-      />
-      <Button onClick={handleSubmit}>{translate("login.submit")}</Button>
-      {/* <button onClick={handleSubmit}>Submit</button > */}
-    </FormCard>
+    <div className="center_content">
+      <FormCard header="Login">
+        <FormTextField
+          autofocus={true}
+          label={translate("login.name")} //lang === "en" ? "Name" : "Имя"
+          name="name"
+          values={values}
+          setValues={setValues}
+        />
+        <FormTextField
+          label={translate("login.email")}
+          type="email"
+          name="email"
+          values={values}
+          setValues={setValues}
+        />
+        <FormTextField
+          label={translate("login.password")}
+          type="password"
+          name="password"
+          values={values}
+          setValues={setValues}
+        />
+        <FormTextField
+          label={translate("login.confirmPassword")}
+          type="password"
+          name="confirmPassword"
+          values={values}
+          setValues={setValues}
+        />
+        <Button onClick={handleSubmit}>{translate("login.submit")}</Button>
+        {/* <button onClick={handleSubmit}>Submit</button > */}
+      </FormCard>
+    </div>
   );
 };
 
