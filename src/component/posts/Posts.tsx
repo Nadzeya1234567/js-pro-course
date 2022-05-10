@@ -1,41 +1,24 @@
-import React, { useEffect, useReducer } from "react";
-import usePosts from "../../apiHooks/usePosts";
-import PostsCard from "./postCard/PostCard";
-import PostsFilter from "./PostsFilter";
-import { initialState, PostsFilterReducer } from "./PostsFilterReducer";
-import { useSelector } from "../hooks/useSelector";
+import React, { useState } from "react";
+import PostsServer from "./PostsServer";
 
 import "./Posts.scss";
-import { useActions } from "../hooks/useActions";
+import PostsFront from "./PostsFront";
+import Button from "../ui/button/Button";
 
 type PropsType = {};
 
 const Posts: React.FC<PropsType> = () => {
-  const [state, dispatch] = useReducer(PostsFilterReducer, initialState);
-  const { fetchPosts } = useActions();
+  const [isServerMode, setIsServerMode] = useState(true);
 
-  //const { data, loading, error } = usePosts(state);
-  const data = useSelector((state) => state.posts.data);
-  const loading = useSelector((state) => state.posts.loading);
-  const error = useSelector((state) => state.posts.error);
-  const count = useSelector((state) => state.posts.count);
-
-  useEffect(() => {
-    fetchPosts(state);
-  }, [state]);
-
+  const handleToggleMode = () => {
+    setIsServerMode((prev) => !prev);
+  };
   return (
     <div className="posts-container">
-      <PostsFilter count={count} state={state} dispatch={dispatch} />
-
-      <div className="cards">
-        {data.map((item) => (
-          <PostsCard key={item.id} data={item} />
-        ))}
+      <Button onClick={handleToggleMode}>Toggle</Button>
+      <div className="mode-container">
+        {isServerMode ? <PostsServer /> : <PostsFront />}
       </div>
-
-      {loading && "Loading..."}
-      {error}
     </div>
   );
 };

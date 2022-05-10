@@ -16,7 +16,7 @@ const LINKS = [
 const Header: React.FC = () => {
   const { lang, setLang } = useTranslate();
 
-  const count = useSelector((state: any) => state.clicker.value);
+  //const count = useSelector((state: any) => state.clicker.value);
 
   //const toggleLanguage = () => {
   //  setLang((prevValue: string) => (prevValue === "en" ? "ru" : "en"));
@@ -26,7 +26,7 @@ const Header: React.FC = () => {
     <nav className="header-container">
       <div className="logo">
         {/* <LogoIcon /> */}
-        {count}
+        {/* {count} */}
         <div className="app-name">Blog Online</div>
       </div>
 
