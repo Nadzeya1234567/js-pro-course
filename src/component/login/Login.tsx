@@ -7,6 +7,7 @@ import FormCard from "../ui/formCard/FormCard";
 import FormTextField from "../ui/formTextField/FormTextField";
 import { useActions } from "../hooks/useActions";
 import { useSelector } from "../hooks/useSelector";
+import { getEmailError, getPasswordError } from "../../helpers/validation";
 
 const nameTranslate: FormValuesType = {
   en: "Name",
@@ -17,15 +18,40 @@ const nameTranslate: FormValuesType = {
 //FE19-onl/Front End
 
 const Login: React.FC = () => {
-  const [values, setValues] = useState<FormValuesType>({});
+  const [values, _setValues] = useState<FormValuesType>({});
+  const [validationsError, setValidationsError] = useState("");
   const { translate } = useTranslate();
-  const { createTokens } = useActions();
+  const { createTokens, setAuthError } = useActions();
   const loading = useSelector((state) => state.auth.loading);
-  const error = useSelector((state) => state.auth.error);
+  const serverError = useSelector((state) => state.auth.error);
+  const error: string =
+    validationsError ||
+    (serverError ? "No active account found with the given credentials" : "");
 
   const handleSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    createTokens(values);
+
+    const validationError =
+      getEmailError(values.email) || getPasswordError(values.password);
+    if (validationError) {
+      setValidationsError(validationError);
+    } else {
+      createTokens(values);
+    }
+  };
+
+  // const emailError = getEmailError(values.email);
+  //if (emailError) {
+  //   setValidationsError(emailError);
+  //  return;
+  // }
+
+  const setValues = (
+    callback: (prevValue: FormValuesType) => FormValuesType
+  ) => {
+    _setValues(callback);
+    setValidationsError("");
+    setAuthError(false);
   };
 
   return (
@@ -46,11 +72,7 @@ const Login: React.FC = () => {
           values={values}
           setValues={setValues}
         />
-        {error && (
-          <div className="form-error">
-            No active account found with the given credentials
-          </div>
-        )}
+        {error && <div className="form-error">{error}</div>}
 
         <Button onClick={handleSubmit}>{translate("login.submit")}</Button>
         {/* <button onClick={handleSubmit}>Submit</button > */}
