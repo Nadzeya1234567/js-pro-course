@@ -1,24 +1,18 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
 import PostsFilterType from "../../component/posts/PostsFilterTypes";
+import api from "../../helpers/api";
 import PostType from "../../types/postType";
-
-const URL = "https://studapi.teachmeskills.by/blog/posts/";
 
 type FetchPostsType = {
   data: PostType[];
   count: number;
 };
 
-export const fetchPosts = createAsyncThunk<
-  FetchPostsType,
-  PostsFilterType,
-  { rejectValue: string }
->(
+export const fetchPosts = createAsyncThunk<FetchPostsType, PostsFilterType, { rejectValue: string }>(
   "posts/fetchPosts",
   async ({ page, limit, author, lesson_num, ordering }, thunkApi) => {
     const offset = limit * (page - 1);
-    let url = `${URL}?limit=${limit}&offset=${offset}&ordering=${ordering}`;
+    let url = `blog/posts/?limit=${limit}&offset=${offset}&ordering=${ordering}`;
 
     if (author) {
       url += `&author=${author}`;
@@ -28,7 +22,7 @@ export const fetchPosts = createAsyncThunk<
     }
 
     try {
-      const response = await axios.get(url);
+      const response = await api.get(url);
       console.log(response);
       return {
         data: response.data.results as PostType[],
@@ -40,21 +34,30 @@ export const fetchPosts = createAsyncThunk<
   }
 );
 
-export const fetchAllPosts = createAsyncThunk<
-  FetchPostsType,
-  undefined,
-  { rejectValue: string }
->("posts/fetchAllPosts", async (_, thunkApi) => {
-  let url = `${URL}?limit=${1000}`;
+export const fetchAllPosts = createAsyncThunk<FetchPostsType, undefined, { rejectValue: string }>(
+  "posts/fetchAllPosts",
+  async (_, thunkApi) => {
+    let url = `blog/posts/?limit=${1000}`;
 
-  try {
-    const response = await axios.get(url);
-    console.log(response);
-    return {
-      data: response.data.results as PostType[],
-      count: response.data.count as number,
-    };
-  } catch {
-    return thunkApi.rejectWithValue("Server error!!!");
+    try {
+      const response = await api.get(url);
+      console.log(response);
+      return {
+        data: response.data.results as PostType[],
+        count: response.data.count as number,
+      };
+    } catch {
+      return thunkApi.rejectWithValue("Server error!!!");
+    }
   }
-});
+);
+
+export const fetchMyPosts = createAsyncThunk<PostType[], undefined, { rejectValue: string }>(
+  "posts/fetchMyPosts",
+  async (_, thunkApi) => {
+    let url = `blog/posts/my_posts`;
+
+    const response = await api.get(url, undefined, true, thunkApi.dispatch);
+    return response.data as PostType[];
+  }
+);

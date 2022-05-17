@@ -1,19 +1,21 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
 import FormValuesType from "../../types/formValuesType";
-import PostType from "../../types/postType";
+import ProfileType from "../../types/profileType";
+import api from "../../helpers/api";
 
-const URL = "https://studapi.teachmeskills.by/auth/jwt/create/";
-
-type FetchPostsType = {
+type TokensType = {
   access: string;
   refresh: string;
 };
 
-export const createTokens = createAsyncThunk<FetchPostsType, FormValuesType>(
-  "auth/createTokens",
-  async (data) => {
-    const response = await axios.post(URL, data);
-    return response.data as FetchPostsType;
-  }
-);
+export const createTokens = createAsyncThunk<TokensType, FormValuesType>("auth/createTokens", async (data) => {
+  const URL = "auth/jwt/create/";
+  const response = await api.post(URL, data);
+  return response.data as TokensType;
+});
+
+export const fetchProfile = createAsyncThunk<ProfileType>("auth/fetchProfile", async (_, thunkApi) => {
+  const URL = "auth/users/me/";
+  const response = await api.get(URL, undefined, true, thunkApi.dispatch);
+  return response.data as ProfileType;
+});
